@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FydelMT | Concesionaria</title>
+
+    <link rel="stylesheet" href="estilo.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <header class="header">
+        <div class="container nav">
+            <div class="logo">
+                <span>Fydel</span>MT
+            </div>
+
+            <nav>
+                <a href="#inicio">Inicio</a>
+                <a href="#vehiculos">Vehículos</a>
+                <a href="#nosotros">Nosotros</a>
+                <a href="#contacto">Contacto</a>
+            </nav>
+
+            <button class="btn btn-primary" onclick="abrirCotizacion()">
+                Cotizar
+            </button>
+        </div>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero" id="inicio">
+        <div class="container hero-content">
+            <div class="hero-text">
+                <span class="badge">CONCESIONARIA PREMIUM</span>
+
+                <h1>
+                    Encuentra el auto
+                    <span>perfecto para ti.</span>
+                </h1>
+
+                <p>
+                    Vehículos nuevos y seminuevos seleccionados,
+                    con financiamiento y garantía.
+                </p>
+
+                <div class="hero-buttons">
+                    <a href="#vehiculos" class="btn btn-primary">
+                        Ver vehículos
+                    </a>
+
+                    <button class="btn btn-outline" onclick="abrirCotizacion()">
+                        Solicitar cotización
+                    </button>
+                </div>
+            </div>
+
+            <div class="hero-car">
+                <div class="car-glow"></div>
+                <img
+                    src="https://images.unsplash.com/photo-1553440569-bcc63803a83d?auto=format&fit=crop&w=1200&q=80"
+                    alt="Auto deportivo">
+            </div>
+        </div>
+    </section>
+
+    <!-- BUSCADOR -->
+    <section class="search-section">
+        <div class="container search-box">
+
+            <div class="search-item">
+                <label>Buscar</label>
+                <input
+                    type="text"
+                    id="buscar"
+                    placeholder="Ej: Toyota, SUV..."
+                    oninput="filtrarAutos()">
+            </div>
+
+            <div class="search-item">
+                <label>Marca</label>
+                <select id="marca" onchange="filtrarAutos()">
+                    <option value="todos">Todas las marcas</option>
+                    <option value="Toyota">Toyota</option>
+                    <option value="Honda">Honda</option>
+                    <option value="BMW">BMW</option>
+                    <option value="Ford">Ford</option>
+                    <option value="Mercedes-Benz">Mercedes-Benz</option>
+                </select>
+            </div>
+
+            <div class="search-item">
+                <label>Tipo</label>
+                <select id="tipo" onchange="filtrarAutos()">
+                    <option value="todos">Todos</option>
+                    <option value="SUV">SUV</option>
+                    <option value="Sedán">Sedán</option>
+                    <option value="Pickup">Pickup</option>
+                    <option value="Deportivo">Deportivo</option>
+                </select>
+            </div>
+
+            <div class="search-item">
+                <label>Precio máximo</label>
+                <select id="precio" onchange="filtrarAutos()">
+                    <option value="999999">Sin límite</option>
+                    <option value="30000">$30,000</option>
+                    <option value="40000">$40,000</option>
+                    <option value="50000">$50,000</option>
+                    <option value="70000">$70,000</option>
+                </select>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- VEHICULOS -->
+    <section class="vehicles section" id="vehiculos">
+        <div class="container">
+
+            <div class="section-header">
+                <div>
+                    <span class="section-tag">CATÁLOGO</span>
+                    <h2>Vehículos disponibles</h2>
+                </div>
+
+                <span id="contador" class="counter">
+                    0 vehículos
+                </span>
+            </div>
+
+            <div id="catalogo" class="vehicle-grid"></div>
+
+            <div id="sinResultados" class="no-results">
+                <h3>No encontramos vehículos</h3>
+                <p>Prueba cambiando los filtros de búsqueda.</p>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- NOSOTROS -->
+    <section class="about section" id="nosotros">
+        <div class="container about-grid">
+
+            <div class="about-image">
+                <img
+                    src="https://images.unsplash.com/photo-1560179707-f14e90ef3623?auto=format&fit=crop&w=1000&q=80"
+                    alt="Concesionaria">
+            </div>
+
+            <div class="about-text">
+                <span class="section-tag">SOBRE NOSOTROS</span>
+
+                <h2>Más que vender autos, construimos confianza.</h2>
+
+                <p>
+                    En AutoMax trabajamos para ofrecer una experiencia
+                    sencilla, transparente y segura al momento de comprar
+                    tu próximo vehículo.
+                </p>
+
+                <div class="features">
+                    <div>
+                        <strong>10+</strong>
+                        <span>Años de experiencia</span>
+                    </div>
+
+                    <div>
+                        <strong>500+</strong>
+                        <span>Autos vendidos</span>
+                    </div>
+
+                    <div>
+                        <strong>98%</strong>
+                        <span>Clientes satisfechos</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- CONTACTO -->
+    <section class="contact section" id="contacto">
+        <div class="container contact-box">
+
+            <div>
+                <span class="section-tag">CONTACTO</span>
+                <h2>¿Listo para comprar tu próximo auto?</h2>
+                <p>
+                    Déjanos tus datos y uno de nuestros asesores
+                    se pondrá en contacto contigo.
+                </p>
+            </div>
+
+            <button class="btn btn-primary" onclick="abrirCotizacion()">
+                Hablar con un asesor
+            </button>
+
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container footer-content">
+            <div class="logo">
+                <span>Fydel</span>MT
+            </div>
+
+            <p>Universidad Tecnológica del Perú</p>
+
+            <p>Venta de vehículos premium</p>
+        </div>
+    </footer>
+
+    <!-- MODAL DETALLE -->
+    <div id="modalDetalle" class="modal">
+        <div class="modal-content">
+
+            <button class="close" onclick="cerrarModal('modalDetalle')">
+                ×
+            </button>
+
+            <div id="detalleAuto"></div>
+
+        </div>
+    </div>
+
+    <!-- MODAL COTIZACIÓN -->
+    <div id="modalCotizacion" class="modal">
+        <div class="modal-content quotation">
+
+            <button class="close" onclick="cerrarModal('modalCotizacion')">
+                ×
+            </button>
+
+            <span class="section-tag">COTIZACIÓN</span>
+
+            <h2>Solicita tu cotización</h2>
+
+            <form id="formCotizacion">
+
+                <div class="form-row">
+                    <div>
+                        <label>Nombre</label>
+                        <input type="text" id="nombre" required>
+                    </div>
+
+                    <div>
+                        <label>Teléfono</label>
+                        <input type="tel" id="telefono" required>
+                    </div>
+                </div>
+
+                <label>Correo electrónico</label>
+                <input type="email" id="correo" required>
+
+                <label>Vehículo de interés</label>
+                <select id="vehiculoInteres">
+                    <option value="">Seleccionar vehículo</option>
+                </select>
+
+                <label>Mensaje</label>
+                <textarea
+                    id="mensaje"
+                    rows="4"
+                    placeholder="Escribe tu consulta..."></textarea>
+
+                <button class="btn btn-primary full" type="submit">
+                    Enviar solicitud
+                </button>
+
+            </form>
+
+        </div>
+    </div>
+
+    <!-- TOAST -->
+    <div id="toast" class="toast">
+        Solicitud enviada correctamente.
+    </div>
+
+    <script src="java.js"></script>
+
+</body>
+</html>
