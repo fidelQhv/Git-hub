@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FydelMT | Servicios de Mantenimiento</title>
+</head>
+
+<body>
+
+    <header>
+        <nav>
+            <div>
+                <span>Fydel</span>MT
+            </div>
+            <div>
+                <a href="index.html#inicio">Inicio</a>
+                <a href="index.html#vehiculos">Vehículos</a>
+                <a href="servicios.html">Servicios</a>
+                <a href="index.html#nosotros">Nosotros</a>
+                <a href="index.html#contacto">Contacto</a>
+            </div>
+            <a href="#agenda">Agendar cita</a>
+        </nav>
+    </header>
+
+    <main>
+        <section id="inicio-servicios">
+            <span>TALLER AUTORIZADO</span>
+            <h1>
+                Mantenimiento que cuida
+                <span>la vida de tu auto.</span>
+            </h1>
+            <p>
+                Técnicos certificados, repuestos originales y diagnóstico
+                computarizado para que tu vehículo esté siempre listo.
+            </p>
+            <div>
+                <a href="#catalogo-servicios">Ver servicios</a>
+                <a href="#agenda">Agendar cita</a>
+            </div>
+        </section>
+
+        <section id="catalogo-servicios">
+            <header>
+                <div>
+                    <span>SERVICIOS</span>
+                    <h2>Nuestros servicios de mantenimiento</h2>
+                </div>
+                <span>8 servicios disponibles</span>
+            </header>
+
+            <div id="servicios">
+                <!-- TODO: servicios generados mediante js -->
+            </div>
+        </section>
+
+        <section>
+            <header>
+                <span>GARANTÍA</span>
+                <h2>¿Por qué mantener tu auto con nosotros?</h2>
+            </header>
+
+            <div>
+                <article>
+                    <span>🔧</span>
+                    <h3>Técnicos certificados</h3>
+                    <p>
+                        Especialistas capacitados en las principales marcas
+                        del mercado.
+                    </p>
+                </article>
+
+                <article>
+                    <span>🛡️</span>
+                    <h3>Garantía de servicio</h3>
+                    <p>
+                        Todo trabajo realizado cuenta con garantía por escrito.
+                    </p>
+                </article>
+
+                <article>
+                    <span>⚙️</span>
+                    <h3>Repuestos originales</h3>
+                    <p>
+                        Usamos piezas originales o certificadas por el fabricante.
+                    </p>
+                </article>
+
+                <article>
+                    <span>⏱️</span>
+                    <h3>Entrega puntual</h3>
+                    <p>
+                        Respetamos el tiempo estimado acordado para cada servicio.
+                    </p>
+                </article>
+            </div>
+        </section>
+
+        <section id="contacto-servicios">
+            <div>
+                <span>RESERVA TU CITA</span>
+                <h2>¿Tu auto necesita mantenimiento?</h2>
+                <p>
+                    Agenda tu cita y nuestro equipo se encargará del resto.
+                </p>
+            </div>
+
+            <a href="#agenda">Agendar cita</a>
+        </section>
+    </main>
+
+    <footer>
+        <div>
+            <div>
+                <span>Fydel</span>MT
+            </div>
+            <p>Universidad Tecnológica del Perú</p>
+            <p>Servicio de mantenimiento automotriz</p>
+        </div>
+    </footer>
+
+    <section id="agenda">
+        <h2>Reserva tu mantenimiento</h2>
+        <form>
+            <div>
+                <label for="nombreAgenda">Nombre</label>
+                <input type="text" id="nombreAgenda" required>
+            </div>
+
+            <div>
+                <label for="telefonoAgenda">Teléfono</label>
+                <input type="tel" id="telefonoAgenda" required>
+            </div>
+
+            <div>
+                <label for="correoAgenda">Correo electrónico</label>
+                <input type="email" id="correoAgenda" required>
+            </div>
+
+            <div>
+                <label for="vehiculoAgenda">Marca y modelo del auto</label>
+                <input
+                    type="text"
+                    id="vehiculoAgenda"
+                    placeholder="Ej: Toyota RAV4 2026"
+                >
+            </div>
+
+            <div>
+                <label for="fechaAgenda">Fecha preferida</label>
+                <input type="date" id="fechaAgenda">
+            </div>
+
+            <div>
+                <label for="servicioInteres">Servicio</label>
+
+                <select id="servicioInteres">
+                    <option value="">Seleccionar servicio</option>
+                </select>
+            </div>
+
+            <div>
+                <label for="mensajeAgenda">Mensaje</label>
+                <textarea
+                    id="mensajeAgenda"
+                    rows="4"
+                    placeholder="Cuéntanos algo más sobre lo que necesita tu auto..."
+                ></textarea>
+            </div>
+
+            <button type="submit">
+                Confirmar cita
+            </button>
+        </form>
+    </section>
+</body>
+</html>
