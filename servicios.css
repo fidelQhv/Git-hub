@@ -1,0 +1,166 @@
+/* ============================================
+   SERVICIOS - Estilos propios de servicios.html
+   ============================================ */
+
+nav a.active {
+    color: var(--primary);
+}
+
+/* HERO SERVICIOS */
+
+.services-hero {
+    min-height: 420px;
+    display: flex;
+    align-items: center;
+    background:
+        radial-gradient(circle at 20% 30%, rgba(229, 9, 20, .14), transparent 40%);
+    border-bottom: 1px solid var(--border);
+}
+
+.services-hero-content {
+    max-width: 720px;
+    padding: 70px 0;
+}
+
+.services-hero-content h1 {
+    font-size: 46px;
+    letter-spacing: -1.5px;
+    margin: 15px 0;
+}
+
+.services-hero-content h1 span {
+    color: var(--primary);
+    display: block;
+}
+
+.services-hero-content p {
+    color: var(--gray);
+    font-size: 16px;
+    line-height: 1.7;
+    max-width: 540px;
+}
+
+.services-hero-content .hero-buttons {
+    margin-top: 30px;
+}
+
+/* GRID DE SERVICIOS */
+
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 22px;
+}
+
+.service-card {
+    background: var(--dark-2);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 26px 22px;
+    transition: .3s;
+    display: flex;
+    flex-direction: column;
+}
+
+.service-card:hover {
+    transform: translateY(-7px);
+    border-color: #454851;
+}
+
+.service-icon {
+    font-size: 30px;
+    margin-bottom: 16px;
+}
+
+.service-name {
+    font-size: 18px;
+    margin-bottom: 8px;
+}
+
+.service-desc {
+    color: var(--gray);
+    font-size: 13px;
+    line-height: 1.6;
+    flex-grow: 1;
+    margin-bottom: 18px;
+}
+
+.service-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid var(--border);
+    padding-top: 16px;
+}
+
+.service-price {
+    font-size: 17px;
+    font-weight: 800;
+}
+
+.service-price small {
+    display: block;
+    color: var(--gray);
+    font-size: 10px;
+    font-weight: 400;
+}
+
+/* POR QUÉ ELEGIRNOS */
+
+.section-alt {
+    background: #0d0f13;
+}
+
+.why-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 22px;
+}
+
+.why-card {
+    text-align: center;
+    padding: 20px;
+}
+
+.why-icon {
+    font-size: 32px;
+    display: block;
+    margin-bottom: 14px;
+}
+
+.why-card h3 {
+    font-size: 16px;
+    margin-bottom: 8px;
+}
+
+.why-card p {
+    color: var(--gray);
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 900px) {
+    .services-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .why-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    .services-hero-content h1 {
+        font-size: 34px;
+    }
+
+    .services-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .why-grid {
+        grid-template-columns: 1fr;
+    }
+}
