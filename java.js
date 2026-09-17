@@ -403,7 +403,50 @@ function mostrarToast(mensaje) {
 
 
 // ============================================
+// SESIÓN DEL USUARIO
+// ============================================
+
+function mostrarUsuarioActivo() {
+
+    const panel = document.getElementById("usuarioActivo");
+    const enlaceLogin = document.getElementById("enlaceLogin");
+    const datosSesion = localStorage.getItem("automax_sesion");
+
+    if (!panel) return;
+
+    if (!datosSesion) {
+        panel.innerHTML = "";
+        panel.classList.remove("show");
+        if (enlaceLogin) enlaceLogin.style.display = "inline-flex";
+        return;
+    }
+
+    const sesion = JSON.parse(datosSesion);
+
+    panel.innerHTML = `
+        <div class="user-panel-info">
+            <span class="user-panel-label">USUARIO ACTIVO</span>
+            <strong>${sesion.nombre}</strong>
+            <span>${sesion.rol || "Cliente"}</span>
+        </div>
+        <button class="btn btn-outline user-logout" type="button" onclick="cerrarSesion()">
+            Cerrar sesión
+        </button>
+    `;
+
+    panel.classList.add("show");
+    if (enlaceLogin) enlaceLogin.style.display = "none";
+}
+
+function cerrarSesion() {
+    localStorage.removeItem("automax_sesion");
+    window.location.href = "login.html";
+}
+
+
+// ============================================
 // INICIAR SISTEMA
 // ============================================
 
 mostrarAutos();
+mostrarUsuarioActivo();

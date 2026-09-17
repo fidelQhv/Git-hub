@@ -5,9 +5,25 @@
 const CLAVE_USUARIOS = "automax_usuarios";
 const CLAVE_SESION = "automax_sesion";
 
+const USUARIOS_INICIALES = [
+    { nombre: "Administrador Principal", correo: "admind@fydelmt.com", password: "admind", rol: "Administrador" },
+    { nombre: "Administrador Ventas", correo: "admind.ventas@fydelmt.com", password: "admind456", rol: "Administrador" },
+    { nombre: "Trabajador FydelMT", correo: "trabajador@fydelmt.com", password: "Trabajo123", rol: "Trabajador" },
+    { nombre: "Cliente Demo", correo: "cliente@fydelmt.com", password: "Cliente123", rol: "Cliente" }
+];
+
 function obtenerUsuarios() {
     const datos = localStorage.getItem(CLAVE_USUARIOS);
-    return datos ? JSON.parse(datos) : [];
+    const usuarios = datos ? JSON.parse(datos) : [];
+    const correosRegistrados = new Set(usuarios.map(usuario => usuario.correo));
+    const usuariosNuevos = USUARIOS_INICIALES.filter(usuario => !correosRegistrados.has(usuario.correo));
+
+    if (usuariosNuevos.length > 0) {
+        guardarUsuarios([...usuarios, ...usuariosNuevos]);
+        return [...usuarios, ...usuariosNuevos];
+    }
+
+    return usuarios;
 }
 
 function guardarUsuarios(usuarios) {
@@ -82,9 +98,13 @@ document.getElementById("formLogin").addEventListener("submit", function (e) {
         return;
     }
 
-    localStorage.setItem(CLAVE_SESION, JSON.stringify({ nombre: usuario.nombre, correo: usuario.correo }));
+    localStorage.setItem(CLAVE_SESION, JSON.stringify({
+        nombre: usuario.nombre,
+        correo: usuario.correo,
+        rol: usuario.rol || "Cliente"
+    }));
 
-    mostrarToast(`¡Bienvenido, ${usuario.nombre}!`);
+    mostrarToast(`¡Bienvenido, ${usuario.nombre}! Rol: ${usuario.rol || "Cliente"}`);
 
     setTimeout(() => {
         window.location.href = "index.html";
@@ -141,7 +161,7 @@ document.getElementById("formRegistro").addEventListener("submit", function (e) 
     if (!valido) return;
 
     const usuarios = obtenerUsuarios();
-    usuarios.push({ nombre, correo, password });
+    usuarios.push({ nombre, correo, password, rol: "Cliente" });
     guardarUsuarios(usuarios);
 
     mostrarToast("Cuenta creada correctamente. Ya puedes iniciar sesión.");
