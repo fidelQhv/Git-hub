@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Servicios | FydelMT</title>
+
+    <!-- Estilos globales -->
+    <link rel="stylesheet" href="estilo.css">
+
+    <!-- Estilos específicos de servicios -->
+    <link rel="stylesheet" href="servicios.css">
+
+    <!-- Tipografía -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <!-- =========================================
+         HEADER
+    ========================================== -->
+    <header class="header">
+        <div class="container nav">
+            <a href="index.html" class="logo">
+                Fydel<span>MT</span>
+            </a>
+
+            <nav>
+                <a href="index.html#inicio">Inicio</a>
+                <a href="index.html#vehiculos">Vehículos</a>
+                <a href="servicios.html">Servicios</a>
+                <a href="index.html#nosotros">Nosotros</a>
+                <a href="index.html#contacto">Contacto</a>
+            </nav>
+
+            <a href="#agenda" class="btn btn-primary">
+                Agendar cita
+            </a>
+        </div>
+    </header>
+
+    <main>
+        <!-- =========================================
+             HERO DE SERVICIOS
+        ========================================== -->
+        <section id="inicio-servicios" class="services-hero">
+            <div class="container services-hero-content">
+                <span class="badge">
+                    SERVICIOS AUTOMOTRICES
+                </span>
+                <h1>Mantenimiento que <span>cuida la vida de tu auto.</span></h1>
+                <p>
+                    Servicios especializados para mantener tu vehículo seguro, confiable y siempre listo para el camino.
+                </p>
+
+                <div class="hero-buttons">
+                    <a href="#catalogo-servicios" class="btn btn-primary">
+                        Ver servicios
+                    </a>
+                    <a href="#agenda" class="btn btn-outline">
+                        Agendar cita
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- =========================================
+             CATÁLOGO DE SERVICIOS
+        ========================================== -->
+        <section id="catalogo-servicios" class="section services">
+            <div class="container">
+                <div class="section-header">
+                    <div>
+                        <span class="section-tag">
+                            NUESTROS SERVICIOS
+                        </span>
+                        <h2>
+                            Todo lo que tu auto necesita
+                        </h2>
+                    </div>
+
+                    <div class="counter">
+                        <strong id="service-count">0</strong>
+                        <span>servicios disponibles</span>
+                    </div>
+                </div>
+
+                <div id="servicios" class="services-grid"></div>
+            </div>
+        </section>
+
+
+        <!-- =========================================
+             POR QUÉ ELEGIRNOS
+        ========================================== -->
+        <section class="section section-alt why">
+            <div class="container">
+                <div class="section-header">
+                    <div>
+                        <span class="section-tag">NUESTRA DIFERENCIA</span>
+                        <h2>¿Por qué mantener tu auto con nosotros?</h2>
+                    </div>
+                </div>
+
+                <div class="why-grid">
+                    <article class="why-card">
+                        <div class="why-icon">🔧</div>
+                        <h3>Técnicos especializados</h3>
+                        <p>
+                            Personal capacitado para atender las
+                            necesidades específicas de tu vehículo.
+                        </p>
+                    </article>
+
+                    <article class="why-card">
+                        <div class="why-icon">✔️</div>
+                        <h3>Calidad garantizada</h3>
+                        <p>
+                            Utilizamos procedimientos y productos
+                            pensados para cuidar el rendimiento de tu auto.
+                        </p>
+                    </article>
+
+                    <article class="why-card">
+                        <div class="why-icon">⌚</div>
+                        <h3>Atención eficiente</h3>
+                        <p>
+                            Optimizamos nuestros procesos para que
+                            puedas volver a la carretera cuanto antes.
+                        </p>
+                    </article>
+
+                    <article class="why-card">
+                        <div class="why-icon">❤️</div>
+                        <h3>Cuidamos tu vehículo</h3>
+                        <p>
+                            Tratamos cada vehículo con responsabilidad, atención y compromiso.
+                        </p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- =========================================
+             AGENDA / RESERVA
+        ========================================== -->
+        <section id="agenda" class="section contact">
+            <div class="container contact-box">
+                <div>
+                    <span class="section-tag">AGENDA TU CITA</span>
+                    <h2>¿Listo para cuidar tu auto?</h2>
+                    <p>
+                        Déjanos tus datos y nos pondremos en contacto contigo para coordinar tu servicio.
+                    </p>
+                </div>
+
+                <form>
+                    <div class="form-row">
+                        <div>
+                            <label for="nombre">Nombre</label>
+                            <input
+                                type="text"
+                                id="nombre"
+                                name="nombre"
+                                placeholder="Tu nombre"
+                            >
+                        </div>
+
+                        <div>
+                            <label for="telefono">Teléfono</label>
+                            <input
+                                type="tel"
+                                id="telefono"
+                                name="telefono"
+                                placeholder="Tu teléfono"
+                            >
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div>
+                            <label for="email">Correo electrónico</label>
+                            <input
+                                type="email"
+                                id="email"
+                                name="email"
+                                placeholder="tu@email.com"
+                            >
+                        </div>
+
+                        <div>
+                            <label for="servicio">Servicio</label>
+                            <select id="servicio" name="servicio">
+                                <option value="">
+                                    Selecciona un servicio
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="full">
+                            <label for="mensaje">Mensaje</label>
+
+                            <textarea
+                                id="mensaje"
+                                name="mensaje"
+                                rows="4"
+                                placeholder="Cuéntanos qué necesita tu vehículo"
+                            ></textarea>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">
+                        Solicitar cita
+                    </button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <!-- =========================================
+         FOOTER
+    ========================================== -->
+    <footer>
+        <div class="container footer-content">
+            <a href="index.html" class="logo">
+                Fydel<span>MT</span>
+            </a>
+
+            <p>Universidad Tecnológica del Perú</p>
+
+            <p>Venta de vehículos premium</p>
+        </div>
+    </footer>
+
+    <script src="servicios.js"></script>
+</body>
+</html>
