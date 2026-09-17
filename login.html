@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar sesión | FydelMT</title>
+
+    <link rel="stylesheet" href="estilo.css">
+    <link rel="stylesheet" href="login.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <header class="header">
+        <div class="container nav">
+            <a href="index.html" class="logo">
+                <span>Fydel</span>MT
+            </a>
+
+            <nav>
+                <a href="index.html#inicio">Inicio</a>
+                <a href="index.html#vehiculos">Vehículos</a>
+                <a href="index.html#nosotros">Nosotros</a>
+                <a href="index.html#contacto">Contacto</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- AUTH -->
+    <section class="auth-section">
+        <div class="auth-box">
+
+            <div class="auth-tabs">
+                <button class="auth-tab active" id="tabLogin" onclick="cambiarTab('login')">
+                    Iniciar sesión
+                </button>
+                <button class="auth-tab" id="tabRegistro" onclick="cambiarTab('registro')">
+                    Registrarse
+                </button>
+            </div>
+
+            <!-- LOGIN -->
+            <form id="formLogin" class="auth-form active" novalidate>
+                <span class="section-tag">BIENVENIDO DE NUEVO</span>
+                <h2>Ingresa a tu cuenta</h2>
+
+                <label for="loginCorreo">Correo electrónico</label>
+                <input type="email" id="loginCorreo" placeholder="tucorreo@ejemplo.com" required>
+                <span class="error-msg" id="errorLoginCorreo"></span>
+
+                <label for="loginPassword">Contraseña</label>
+                <input type="password" id="loginPassword" placeholder="Tu contraseña" required>
+                <span class="error-msg" id="errorLoginPassword"></span>
+
+                <label class="checkbox-row">
+                    <input type="checkbox" id="loginRecordar">
+                    Recordarme
+                </label>
+
+                <button type="submit" class="btn btn-primary full">Iniciar sesión</button>
+
+                <p class="auth-switch">
+                    ¿No tienes cuenta?
+                    <a href="#" onclick="cambiarTab('registro'); return false;">Regístrate aquí</a>
+                </p>
+            </form>
+
+            <!-- REGISTRO -->
+            <form id="formRegistro" class="auth-form" novalidate>
+                <span class="section-tag">CREA TU CUENTA</span>
+                <h2>Regístrate</h2>
+
+                <label for="regNombre">Nombre completo</label>
+                <input type="text" id="regNombre" placeholder="Ej: Juan Pérez" required>
+                <span class="error-msg" id="errorRegNombre"></span>
+
+                <label for="regCorreo">Correo electrónico</label>
+                <input type="email" id="regCorreo" placeholder="tucorreo@ejemplo.com" required>
+                <span class="error-msg" id="errorRegCorreo"></span>
+
+                <div class="form-row">
+                    <div>
+                        <label for="regPassword">Contraseña</label>
+                        <input type="password" id="regPassword" placeholder="Mínimo 6 caracteres" required>
+                        <span class="error-msg" id="errorRegPassword"></span>
+                    </div>
+
+                    <div>
+                        <label for="regPassword2">Confirmar contraseña</label>
+                        <input type="password" id="regPassword2" placeholder="Repite tu contraseña" required>
+                        <span class="error-msg" id="errorRegPassword2"></span>
+                    </div>
+                </div>
+
+                <label class="checkbox-row">
+                    <input type="checkbox" id="regTerminos" required>
+                    Acepto los términos y condiciones
+                </label>
+                <span class="error-msg" id="errorRegTerminos"></span>
+
+                <button type="submit" class="btn btn-primary full">Crear cuenta</button>
+
+                <p class="auth-switch">
+                    ¿Ya tienes cuenta?
+                    <a href="#" onclick="cambiarTab('login'); return false;">Inicia sesión aquí</a>
+                </p>
+            </form>
+
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container footer-content">
+            <div class="logo">
+                <span>Fydel</span>MT
+            </div>
+
+            <p>Universidad Tecnológica del Perú</p>
+
+            <p>Venta de vehículos premium</p>
+        </div>
+    </footer>
+
+    <!-- TOAST -->
+    <div id="toast" class="toast">
+        Sesión iniciada correctamente.
+    </div>
+
+    <script src="login.js"></script>
+
+</body>
+</html>

@@ -73,6 +73,12 @@ nav a:hover {
     color: var(--primary);
 }
 
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
 .btn {
     border: none;
     cursor: pointer;
