@@ -12,7 +12,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 
-<body>
+<body>  
 
     <!-- NAVBAR -->
     <header class="header">
@@ -31,7 +31,7 @@
             </nav>
 
             <div class="nav-actions">
-                <a href="login.html" class="btn btn-outline">
+                <a href="login.html" id="enlaceLogin" class="btn btn-outline">
                     Iniciar sesión
                 </a>
 
@@ -294,6 +294,9 @@
     <div id="toast" class="toast">
         Solicitud enviada correctamente.
     </div>
+
+    <!-- USUARIO ACTIVO -->
+    <aside id="usuarioActivo" class="user-panel" aria-live="polite"></aside>
 
     <script src="java.js"></script>
 

@@ -103,3 +103,20 @@ form input.input-error {
 .auth-switch a:hover {
     text-decoration: underline;
 }
+
+.demo-accounts {
+    display: grid;
+    gap: 5px;
+    margin-top: 20px;
+    padding: 12px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--dark-3);
+    color: var(--gray);
+    font-size: 11px;
+}
+
+.demo-accounts strong {
+    color: white;
+    font-size: 12px;
+}
