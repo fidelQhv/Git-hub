@@ -1,7 +1,7 @@
 // ============================================
 // BASE DE DATOS DE VEHÍCULOS
 // ============================================
-
+// Corrección del Bug 02: Correccion del cierre de modal en moviles
 const autos = [
     {
         id: 1,
