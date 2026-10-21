@@ -2,7 +2,10 @@
    SERVICIOS - Estilos propios de servicios.html
    ============================================ */
 
-/* HERO SERVICIOS */
+/* HERO SERVICIOS 
+#BUG-03 error de formato en precios
+*/
+
 
 .services-hero {
     min-height: 420px;
@@ -180,3 +183,4 @@
         grid-template-columns: 1fr;
     }
 }
+
