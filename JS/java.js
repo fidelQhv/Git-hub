@@ -147,7 +147,7 @@ function mostrarAutos(lista = autos) {
                 <div class="vehicle-bottom">
 
                     <div class="vehicle-price">
-                        $${auto.precio.toLocaleString()}
+                        ${precioDualHTML(auto.precio)}
                         <small>Precio contado</small>
                     </div>
 
@@ -241,7 +241,7 @@ function verDetalle(id) {
         </h2>
 
         <div class="detail-price">
-            $${auto.precio.toLocaleString()}
+            ${precioDualHTML(auto.precio)}
         </div>
 
         <div class="vehicle-specs">
@@ -443,10 +443,29 @@ function cerrarSesion() {
     window.location.href = "login.html";
 }
 
+// ============================================
+// EVENTOS DE FILTROS
+// ============================================
+
+function configurarFiltros() {
+    document.querySelectorAll("#precio option").forEach(opcion => {
+        const valor = Number(opcion.value);
+        if (valor < 999999) {
+            opcion.textContent =
+                `${formatearUSD(valor)} (≈ ${formatearPEN(valor)})`;
+        }
+    });
+    ["buscar", "marca", "tipo", "precio"].forEach(id => {
+        const campo = document.getElementById(id);
+        campo.addEventListener("input", filtrarAutos);
+        campo.addEventListener("change", filtrarAutos);
+    });
+}
 
 // ============================================
 // INICIAR SISTEMA
 // ============================================
 
-mostrarAutos();
+configurarFiltros();
+filtrarAutos();
 mostrarUsuarioActivo();
