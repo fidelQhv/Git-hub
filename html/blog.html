@@ -47,13 +47,13 @@
             <div class="container search-box blog-search">
                 <div class="search-item">
                     <label for="buscarPost">Buscar</label>
-                    <input type="text" id="buscarPost" placeholder="Ej: aceite, financiamiento...">
+                    <input type="text" id="buscarPost" placeholder="Ej: aceite, financiamiento..." autocomplete="off">
                 </div>
 
                 <div class="search-item">
                     <label for="categoriaPost">Categoría</label>
                     <select id="categoriaPost">
-                        <option>Todas las categorías</option>
+                        <option value="todas">Todas las categorías</option>
                     </select>
                 </div>
             </div>
@@ -66,12 +66,12 @@
                         <span class="section-tag">ARTÍCULOS</span>
                         <h2>Últimas publicaciones</h2>
                     </div>
-                    <span class="counter">0 artículos</span>
+                    <span id="contadorPosts" class="counter">0 artículos</span>
                 </div>
 
-                <div class="vehicle-grid"></div>
+                <div id="blogGrid" class="vehicle-grid"></div>
 
-                <div class="no-results">
+                <div id="sinPosts" class="no-results">
                     <h3>No encontramos artículos</h3>
                     <p>Prueba con otra búsqueda o categoría.</p>
                 </div>
@@ -89,12 +89,16 @@
         </div>
     </footer>
 
-    <div class="modal">
+    <div id="modalPost" class="modal">
         <div class="modal-content">
-            <button class="close" type="button" aria-label="Cerrar">×</button>
+            <button class="close" type="button" aria-label="Cerrar" onclick="cerrarPost()">×</button>
+            <div id="detallePost"></div>
         </div>
     </div>
 
     <div id="toast" class="toast"></div>
+
+    <script src="../JS/comun.js"></script>
+    <script src="../JS/blog.js"></script>
 </body>
 </html>
