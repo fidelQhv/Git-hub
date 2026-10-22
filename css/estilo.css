@@ -1,3 +1,19 @@
+/* ==========================================
+   #BUG-03: Corrección de formato y visualización de precios
+   ========================================== */
+.precio-vehiculo, .card-price {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #2e7d32; /* Verde corporativo para precios */
+    text-align: right;
+    letter-spacing: 0.5px;
+}
+
+.precio-vehiculo::before {
+    content: "S/ ";
+    font-weight: normal;
+}
+
 * {
     margin: 0;
     padding: 0;

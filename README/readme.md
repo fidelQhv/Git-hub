@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🚗 AutoMax — Sistema Web de Concesionaria
+#  AutoMax — Sistema Web de Concesionaria
 
 <p align="center">
   <b>Sistema web frontend moderno para concesionarias de vehículos, desarrollado con tecnologías web nativas.</b>
@@ -14,18 +14,18 @@
 
 ---
 
-## ✨ Características Principales
+##  Características Principales
 
-*   **Catálogo Dinámico:** Visualización completa de vehículos disponibles.
-*   **Búsqueda y Filtros Avanzados:** Búsqueda por texto, y filtros específicos por marca, tipo de vehículo y precio máximo.
-*   **Diseño 100% Responsive:** Experiencia de usuario optimizada para celulares, tablets y computadoras.
-*   **Modales Interactivos:** Ventanas emergentes para consultar especificaciones detalladas y enviar solicitudes de cotización.
-*   **Interfaz Premium:** Estética moderna, limpia y orientada a la conversión comercial.
-*   **Sin Dependencias:** No requiere frameworks pesados ni configuración de backend para funcionar.
+   **Catálogo Dinámico:** Visualización completa de vehículos disponibles.
+   **Búsqueda y Filtros Avanzados:** Búsqueda por texto, y filtros específicos por marca, tipo de vehículo y precio máximo.
+  **Diseño 100% Responsive:** Experiencia de usuario optimizada para celulares, tablets y computadoras.
+   **Modales Interactivos:** Ventanas emergentes para consultar especificaciones detalladas y enviar solicitudes de cotización.
+   **Interfaz Premium:** Estética moderna, limpia y orientada a la conversión comercial.
+  **Sin Dependencias:** No requiere frameworks pesados ni configuración de backend para funcionar.
 
 ---
 
-## 🛠️ Tecnologías Utilizadas
+##  Tecnologías Utilizadas
 
 | Tecnología | Propósito |
 | :--- | :--- |

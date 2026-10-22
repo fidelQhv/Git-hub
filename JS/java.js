@@ -1,7 +1,25 @@
 // ============================================
 // BASE DE DATOS DE VEHÍCULOS
 // ============================================
-// Corrección del Bug 02: Correccion del cierre de modal en moviles
+
+// ==========================================
+// #BUG-02: Corrección del cierre de modal en móviles
+// ==========================================
+
+document.addEventListener('DOMContentLoaded', function() {
+    const modalElement = document.querySelector('.modal, #modalAuto');
+    const closeBtn = document.querySelector('.close-modal, .btn-cerrar');
+    
+    if (modalElement && closeBtn) {
+        closeBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            modalElement.style.display = 'none';
+            // Asegurar limpieza de eventos táctiles en móviles
+            document.body.classList.remove('modal-open');
+        });
+    }
+});
+
 const autos = [
     {
         id: 1,
