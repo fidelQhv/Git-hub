@@ -26,6 +26,7 @@
                 <a href="#inicio">Inicio</a>
                 <a href="#vehiculos">Vehículos</a>
                 <a href="../html/servicios.html">Servicios</a>
+                <a href="../html/blog.html">Blog</a>
                 <a href="#nosotros">Nosotros</a>
                 <a href="#contacto">Contacto</a>
             </nav>
@@ -88,12 +89,12 @@
                     type="text"
                     id="buscar"
                     placeholder="Ej: Toyota, SUV..."
-                    oninput="filtrarAutos()">
+                    autocomplete="off">
             </div>
 
             <div class="search-item">
                 <label>Marca</label>
-                <select id="marca" onchange="filtrarAutos()">
+                <select id="marca">
                     <option value="todos">Todas las marcas</option>
                     <option value="Toyota">Toyota</option>
                     <option value="Honda">Honda</option>
@@ -105,7 +106,7 @@
 
             <div class="search-item">
                 <label>Tipo</label>
-                <select id="tipo" onchange="filtrarAutos()">
+                <select id="tipo">
                     <option value="todos">Todos</option>
                     <option value="SUV">SUV</option>
                     <option value="Sedán">Sedán</option>
@@ -116,7 +117,7 @@
 
             <div class="search-item">
                 <label>Precio máximo</label>
-                <select id="precio" onchange="filtrarAutos()">
+                <select id="precio">
                     <option value="999999">Sin límite</option>
                     <option value="30000">$30,000</option>
                     <option value="40000">$40,000</option>
@@ -232,7 +233,7 @@
     <div id="modalDetalle" class="modal">
         <div class="modal-content">
 
-            <button class="close" onclick="cerrarModal('modalDetalle')">
+            <button class="close" type="button" onclick="cerrarModal('modalDetalle')">
                 ×
             </button>
 
@@ -245,7 +246,7 @@
     <div id="modalCotizacion" class="modal">
         <div class="modal-content quotation">
 
-            <button class="close" onclick="cerrarModal('modalCotizacion')">
+            <button class="close" type="button" onclick="cerrarModal('modalCotizacion')">
                 ×
             </button>
 
@@ -298,6 +299,7 @@
     <!-- USUARIO ACTIVO -->
     <aside id="usuarioActivo" class="user-panel" aria-live="polite"></aside>
 
+    <script src="../JS/comun.js"></script>
     <script src="../JS/java.js"></script>
 
 </body>

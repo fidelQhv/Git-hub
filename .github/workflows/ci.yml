@@ -19,7 +19,7 @@ jobs:
 
     - name: Validar archivos JS y sintaxis
       run: |
-        node -c java.js
+        node --check JS/java.js
 
     - name: Ejecutar Pruebas Automáticas
       run: |
