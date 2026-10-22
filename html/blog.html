@@ -4,12 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blog | FydelMT</title>
+    <link rel="stylesheet" href="../css/estilo.css">
+    <link rel="stylesheet" href="../css/blog.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 
 <body>
-    <header>
-        <div>
-            <a href="index.html">
+    <header class="header">
+        <div class="container nav">
+            <a href="index.html" class="logo">
                 Fydel<span>MT</span>
             </a>
             <nav>
@@ -20,16 +25,16 @@
                 <a href="index.html#nosotros">Nosotros</a>
                 <a href="index.html#contacto">Contacto</a>
             </nav>
-            <div>
-                <a href="login.html">Iniciar sesión</a>
+            <div class="nav-actions">
+                <a href="login.html" class="btn btn-outline">Iniciar sesión</a>
             </div>
         </div>
     </header>
 
     <main>
-        <section>
-            <div>
-                <span>BLOG</span>
+        <section class="blog-hero">
+            <div class="container blog-hero-content">
+                <span class="badge">BLOG</span>
                 <h1>Consejos y novedades <span>para tu vehículo.</span></h1>
                 <p>
                     Mantenimiento, compra y financiamiento explicados de forma
@@ -38,30 +43,35 @@
             </div>
         </section>
 
-        <section>
-            <div>
-                <div>
+        <section class="search-section">
+            <div class="container search-box blog-search">
+                <div class="search-item">
                     <label for="buscarPost">Buscar</label>
                     <input type="text" id="buscarPost" placeholder="Ej: aceite, financiamiento...">
                 </div>
 
-                <div>
+                <div class="search-item">
                     <label for="categoriaPost">Categoría</label>
+                    <select id="categoriaPost">
+                        <option>Todas las categorías</option>
+                    </select>
                 </div>
             </div>
         </section>
 
-        <section>
-            <div>
-                <div>
+        <section class="section blog-section">
+            <div class="container">
+                <div class="section-header">
                     <div>
-                        <span>ARTÍCULOS</span>
+                        <span class="section-tag">ARTÍCULOS</span>
                         <h2>Últimas publicaciones</h2>
                     </div>
-                    <span>0 artículos</span>
+                    <span class="counter">0 artículos</span>
                 </div>
 
-                <div>
+                <div class="vehicle-grid"></div>
+
+                <div class="no-results">
                     <h3>No encontramos artículos</h3>
                     <p>Prueba con otra búsqueda o categoría.</p>
                 </div>
@@ -70,8 +80,8 @@
     </main>
 
     <footer>
-        <div>
-            <a href="index.html">
+        <div class="container footer-content">
+            <a href="index.html" class="logo">
                 Fydel<span>MT</span>
             </a>
             <p>Universidad Tecnológica del Perú</p>
@@ -79,10 +89,12 @@
         </div>
     </footer>
 
-    <div>
-        <div>
-            <button type="button" aria-label="Cerrar"">×</button>
+    <div class="modal">
+        <div class="modal-content">
+            <button class="close" type="button" aria-label="Cerrar">×</button>
         </div>
     </div>
+
+    <div id="toast" class="toast"></div>
 </body>
 </html>
