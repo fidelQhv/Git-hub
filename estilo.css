@@ -643,3 +643,16 @@ form textarea {
         text-align: center;
     }
 }
+
+/* ==========================================
+    #BUG-03 Formato de precios
+   ========================================== */
+.precio-vehiculo {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #1b5e20;
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 4px;
+    background-color: #e8f5e9;
+}
