@@ -20,91 +20,8 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-const autos = [
-    {
-        id: 1,
-        marca: "Toyota",
-        modelo: "RAV4 2026",
-        tipo: "SUV",
-        precio: 38900,
-        año: 2026,
-        kilometraje: "0 km",
-        motor: "2.5L Hybrid",
-        transmision: "Automática",
-        imagen: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQbve_ornMNxTk7NClqrY6g33VwgnJHvMyXAMqKXJkCdA&s=10",
-        descripcion: "SUV moderna, eficiente y espaciosa. Ideal para ciudad y viajes familiares."
-    },
-
-    {
-        id: 2,
-        marca: "BMW",
-        modelo: "Serie 3",
-        tipo: "Sedán",
-        precio: 52900,
-        año: 2026,
-        kilometraje: "0 km",
-        motor: "2.0L Turbo",
-        transmision: "Automática",
-        imagen: "https://images.unsplash.com/photo-1555215695-3004980ad54e?auto=format&fit=crop&w=900&q=80",
-        descripcion: "Sedán premium con tecnología avanzada, excelente rendimiento y diseño deportivo."
-    },
-
-    {
-        id: 3,
-        marca: "Ford",
-        modelo: "Ranger",
-        tipo: "Pickup",
-        precio: 45900,
-        año: 2025,
-        kilometraje: "8,500 km",
-        motor: "3.0L Diesel",
-        transmision: "Automática",
-        imagen: "https://images.unsplash.com/photo-1551830820-330a71b99659?auto=format&fit=crop&w=900&q=80",
-        descripcion: "Pickup robusta preparada para trabajo, aventura y conducción todoterreno."
-    },
-
-    {
-        id: 4,
-        marca: "Honda",
-        modelo: "Civic",
-        tipo: "Sedán",
-        precio: 31900,
-        año: 2026,
-        kilometraje: "0 km",
-        motor: "1.5L Turbo",
-        transmision: "CVT",
-        imagen: "https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?auto=format&fit=crop&w=900&q=80",
-        descripcion: "Sedán moderno con gran eficiencia de combustible y tecnología de seguridad."
-    },
-
-    {
-        id: 5,
-        marca: "Mercedes-Benz",
-        modelo: "GLC 300",
-        tipo: "SUV",
-        precio: 68900,
-        año: 2026,
-        kilometraje: "0 km",
-        motor: "2.0L Turbo",
-        transmision: "Automática",
-        imagen: "https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?auto=format&fit=crop&w=900&q=80",
-        descripcion: "SUV de lujo con interior premium, tecnología inteligente y gran confort."
-    },
-
-    {
-        id: 6,
-        marca: "Toyota",
-        modelo: "Supra GR",
-        tipo: "Deportivo",
-        precio: 59900,
-        año: 2025,
-        kilometraje: "3,200 km",
-        motor: "3.0L Turbo",
-        transmision: "Automática",
-        imagen: "https://images.unsplash.com/photo-1614200187524-dc4b892acf16?auto=format&fit=crop&w=900&q=80",
-        descripcion: "Deportivo de alto rendimiento con diseño agresivo y excelente dinámica."
-    }
-];
+// Los vehículos ahora se leen de MySQL mediante GET /api/vehiculos
+let autos = [];
 
 
 // ============================================
@@ -386,16 +303,28 @@ document
 
         event.preventDefault();
 
+        const formulario = this;
         const nombre =
             document.getElementById("nombre").value;
 
-        mostrarToast(
-            `Gracias ${nombre}. Tu solicitud fue enviada correctamente.`
-        );
-
-        this.reset();
-
-        cerrarModal("modalCotizacion");
+        apiFetch("/cotizaciones", {
+            method: "POST",
+            body: JSON.stringify({
+                nombre,
+                telefono: document.getElementById("telefono").value,
+                correo: document.getElementById("correo").value,
+                vehiculoId: document.getElementById("vehiculoInteres").value,
+                mensaje: document.getElementById("mensaje").value
+            })
+        })
+            .then(() => {
+                mostrarToast(
+                    `Gracias ${nombre}. Tu solicitud fue enviada correctamente.`
+                );
+                formulario.reset();
+                cerrarModal("modalCotizacion");
+            })
+            .catch(error => mostrarToast(error.message));
     });
 
 
@@ -458,6 +387,7 @@ function mostrarUsuarioActivo() {
 
 function cerrarSesion() {
     localStorage.removeItem("automax_sesion");
+    localStorage.removeItem("automax_token");
     window.location.href = "login.html";
 }
 
@@ -484,6 +414,17 @@ function configurarFiltros() {
 // INICIAR SISTEMA
 // ============================================
 
-configurarFiltros();
-filtrarAutos();
-mostrarUsuarioActivo();
+async function iniciarCatalogo() {
+    configurarFiltros();
+    mostrarUsuarioActivo();
+
+    try {
+        autos = await apiFetch("/vehiculos");
+    } catch (error) {
+        mostrarToast("No se pudo cargar el catálogo. Intenta nuevamente.");
+    }
+
+    filtrarAutos();
+}
+
+iniciarCatalogo();

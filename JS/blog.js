@@ -1,92 +1,7 @@
-const CLAVE_COMENTARIOS = "automax_comentarios";
 const CLAVE_SESION_BLOG = "automax_sesion";
 
-const posts = [
-    {
-        id: 1,
-        titulo: "5 señales de que tu auto necesita mantenimiento",
-        categoria: "Mantenimiento",
-        autor: "Equipo Técnico FydelMT",
-        fecha: "2026-09-12",
-        imagen: "../img/mantenimiento.jpg",
-        resumen: "Ruidos, vibraciones o luces en el tablero: aprende a detectar a tiempo lo que tu vehículo intenta decirte.",
-        contenido: [
-            "Un vehículo casi siempre avisa antes de fallar. Prestar atención a esos avisos permite corregir el problema cuando todavía es pequeño y económico.",
-            "Las señales más comunes son las luces encendidas en el tablero, los ruidos metálicos al frenar, las vibraciones en el volante, el aumento del consumo de combustible y los olores extraños dentro o fuera de la cabina.",
-            "Si notas cualquiera de ellas, lo recomendable es realizar un diagnóstico completo en lugar de esperar a que la falla empeore. Revisar el manual del fabricante y respetar los intervalos de mantenimiento también ayuda a evitar sorpresas."
-        ]
-    },
-    {
-        id: 2,
-        titulo: "Cómo elegir entre un auto nuevo y uno seminuevo",
-        categoria: "Consejos",
-        autor: "Asesoría Comercial",
-        fecha: "2026-09-28",
-        imagen: "https://images.unsplash.com/photo-1555215695-3004980ad54e?auto=format&fit=crop&w=900&q=80",
-        resumen: "Presupuesto, garantía y depreciación: los factores que debes comparar antes de decidir.",
-        contenido: [
-            "Elegir entre un auto nuevo y uno seminuevo depende de tu presupuesto, del uso que le darás y de cuánto valoras la garantía de fábrica.",
-            "Un vehículo nuevo suele ofrecer garantía completa y la tecnología más reciente, pero pierde valor con mayor rapidez durante los primeros años. Uno seminuevo normalmente cuesta menos, aunque conviene revisar su historial de mantenimiento y su kilometraje.",
-            "Antes de decidir, compara el costo total de propiedad: precio de compra, seguro, combustible y mantenimiento. Y si tienes dudas, solicita una cotización con uno de nuestros asesores."
-        ]
-    },
-    {
-        id: 3,
-        titulo: "Guía rápida para cambiar el aceite a tiempo",
-        categoria: "Mantenimiento",
-        autor: "Equipo Técnico FydelMT",
-        fecha: "2026-10-03",
-        imagen: "../img/aceite.jpg",
-        resumen: "Qué hace el aceite por tu motor, cada cuánto cambiarlo y qué tipo elegir.",
-        contenido: [
-            "El aceite lubrica, enfría y limpia las piezas internas del motor. Con el uso se degrada y pierde esas propiedades, por eso es importante cambiarlo junto con el filtro.",
-            "El intervalo exacto depende del tipo de aceite, del motor y de las condiciones de manejo; el manual de tu vehículo indica el valor recomendado. En ciudad, con tráfico pesado y trayectos cortos, el desgaste suele ser mayor.",
-            "Usar el aceite con la viscosidad que especifica el fabricante es más importante que elegir la marca más cara."
-        ]
-    },
-    {
-        id: 4,
-        titulo: "Financiamiento vehicular: qué revisar antes de firmar",
-        categoria: "Financiamiento",
-        autor: "Asesoría Comercial",
-        fecha: "2026-10-08",
-        imagen: "https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?auto=format&fit=crop&w=900&q=80",
-        resumen: "Cuota inicial, tasa y costos adicionales: las preguntas clave antes de comprometerte.",
-        contenido: [
-            "Un financiamiento no se evalúa solo por la cuota mensual. Pregunta por la tasa de interés, el plazo, los seguros obligatorios y cualquier comisión adicional.",
-            "Pide siempre el cronograma de pagos completo y verifica cuánto pagarás en total al terminar el crédito. Si tus ingresos están en soles y el vehículo está en dólares, considera también el efecto del tipo de cambio.",
-            "Una cuota inicial mayor suele reducir los intereses totales. Compara al menos dos o tres propuestas antes de decidir."
-        ]
-    },
-    {
-        id: 5,
-        titulo: "Frenos y llantas: la seguridad empieza por ahí",
-        categoria: "Mantenimiento",
-        autor: "Equipo Técnico FydelMT",
-        fecha: "2026-10-14",
-        imagen: "../img/frenos.jpg",
-        resumen: "Cuándo revisar pastillas, discos y neumáticos para viajar con tranquilidad.",
-        contenido: [
-            "Frenos y llantas son los únicos puntos de contacto entre tu vehículo y la pista, por lo que su estado influye directamente en la seguridad.",
-            "Revisa periódicamente el desgaste de las pastillas, el nivel del líquido de frenos y la profundidad del dibujo de las llantas. Una presión de inflado correcta también mejora el consumo y la duración del neumático.",
-            "La alineación y el balanceo evitan desgastes irregulares y vibraciones. Si notas que el auto se va hacia un lado, es momento de revisarlo."
-        ]
-    },
-    {
-        id: 6,
-        titulo: "Novedades: nuevos modelos disponibles en el catálogo",
-        categoria: "Novedades",
-        autor: "Equipo FydelMT",
-        fecha: "2026-10-18",
-        imagen: "https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?auto=format&fit=crop&w=900&q=80",
-        resumen: "Revisa los vehículos disponibles y filtra por marca, tipo y precio máximo.",
-        contenido: [
-            "Nuestro catálogo se actualiza con nuevas unidades de distintas marcas y tipos de carrocería: SUV, sedán, pickup y deportivos.",
-            "Puedes filtrar por marca, tipo y precio máximo, y ver cada precio en dólares con su equivalente en soles.",
-            "Si te interesa alguno, solicita una cotización desde la ficha del vehículo y un asesor se pondrá en contacto contigo."
-        ]
-    }
-];
+// Los artículos ahora se leen de MySQL mediante GET /api/posts
+let posts = [];
 
 let postActualId = null;
 
@@ -227,36 +142,23 @@ function cerrarPost() {
     actualizarHash();
 }
 
-function obtenerComentarios(postId) {
-    try {
-        const todos = JSON.parse(localStorage.getItem(CLAVE_COMENTARIOS)) || {};
-        return todos[postId] || [];
-    } catch (error) {
-        return [];
-    }
-}
-
-function guardarComentarios(postId, comentarios) {
-    let todos = {};
-    try {
-        todos = JSON.parse(localStorage.getItem(CLAVE_COMENTARIOS)) || {};
-    } catch (error) {
-        todos = {};
-    }
-    todos[postId] = comentarios;
-    localStorage.setItem(CLAVE_COMENTARIOS, JSON.stringify(todos));
-}
-
 function puedeEliminar(comentario, sesion) {
     return Boolean(sesion) &&
-        (sesion.rol === "Administrador" || sesion.correo === comentario.correo);
+        (sesion.rol === "Administrador" || comentario.propio === true);
 }
 
-function renderizarComentarios() {
+async function renderizarComentarios() {
     const contenedor = document.getElementById("seccionComentarios");
     if (!contenedor || postActualId === null) return;
+    const idSolicitado = postActualId;
     const sesion = obtenerSesion();
-    const comentarios = obtenerComentarios(postActualId);
+    let comentarios = [];
+    try {
+        comentarios = await apiFetch(`/posts/${idSolicitado}/comentarios`);
+    } catch (error) {
+        mostrarToastBlog("No se pudieron cargar los comentarios.");
+    }
+    if (postActualId !== idSolicitado) return;
     contenedor.innerHTML = `
         <h4>Comentarios (${comentarios.length})</h4>
         <div class="blog-comment-list"></div>
@@ -266,7 +168,7 @@ function renderizarComentarios() {
     if (comentarios.length === 0) {
         lista.innerHTML = `<p class="blog-empty">Aún no hay comentarios. ¡Sé el primero!</p>`;
     }
-    comentarios.forEach((comentario, indice) => {
+    comentarios.forEach(comentario => {
         const item = document.createElement("div");
         item.className = "blog-comment";
         const cabecera = document.createElement("div");
@@ -281,7 +183,7 @@ function renderizarComentarios() {
             const borrar = document.createElement("button");
             borrar.type = "button";
             borrar.className = "blog-comment-delete";
-            borrar.dataset.indice = indice;
+            borrar.dataset.id = comentario.id;
             borrar.textContent = "Eliminar";
             cabecera.append(borrar);
         }
@@ -311,7 +213,7 @@ function renderizarComentarios() {
         .addEventListener("submit", publicarComentario);
 }
 
-function publicarComentario(event) {
+async function publicarComentario(event) {
     event.preventDefault();
     const sesion = obtenerSesion();
     if (!sesion) {
@@ -324,30 +226,37 @@ function publicarComentario(event) {
         mostrarToastBlog("Escribe un comentario de al menos 3 caracteres.");
         return;
     }
-    const comentarios = obtenerComentarios(postActualId);
-    comentarios.push({
-        nombre: sesion.nombre,
-        correo: sesion.correo,
-        rol: sesion.rol || "Cliente",
-        texto,
-        fecha: new Date().toISOString()
-    });
-    guardarComentarios(postActualId, comentarios);
-    renderizarComentarios();
+    try {
+        await apiFetch(`/posts/${postActualId}/comentarios`, {
+            method: "POST",
+            body: JSON.stringify({ texto })
+        });
+    } catch (error) {
+        mostrarToastBlog(error.status === 401
+            ? "Tu sesión expiró. Inicia sesión nuevamente."
+            : error.message);
+        return;
+    }
+    await renderizarComentarios();
     mostrarToastBlog("Comentario publicado.");
 }
 
-function eliminarComentario(indice) {
-    const sesion = obtenerSesion();
-    const comentarios = obtenerComentarios(postActualId);
-    const comentario = comentarios[indice];
-    if (!comentario || !puedeEliminar(comentario, sesion)) return;
-    comentarios.splice(indice, 1);
-    guardarComentarios(postActualId, comentarios);
+async function eliminarComentario(id) {
+    try {
+        await apiFetch(`/comentarios/${id}`, { method: "DELETE" });
+    } catch (error) {
+        mostrarToastBlog(error.message);
+        return;
+    }
     renderizarComentarios();
 }
 
-function iniciarBlog() {
+async function iniciarBlog() {
+    try {
+        posts = await apiFetch("/posts");
+    } catch (error) {
+        mostrarToastBlog("No se pudieron cargar los artículos.");
+    }
     cargarCategorias();
     ["buscarPost", "categoriaPost"].forEach(id => {
         const campo = document.getElementById(id);
@@ -365,7 +274,7 @@ function iniciarBlog() {
             return;
         }
         const borrar = event.target.closest(".blog-comment-delete");
-        if (borrar) eliminarComentario(Number(borrar.dataset.indice));
+        if (borrar) eliminarComentario(Number(borrar.dataset.id));
     });
     document.getElementById("modalPost").addEventListener("click", event => {
         if (event.target.id === "modalPost") {
