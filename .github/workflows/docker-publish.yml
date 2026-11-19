@@ -24,7 +24,10 @@ jobs:
 
     - name: Validar sintaxis del servidor y del frontend
       run: |
-        cd server && npm ci && npm run check && cd ..
+        cd server
+        npm ci
+        npm run check
+        cd ..
         for f in JS/*.js; do node --check "$f"; done
 
     - name: Nombre de imagen en minúsculas
