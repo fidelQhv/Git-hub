@@ -3,27 +3,109 @@ name: CI AutoMax Web System
 on:
   pull_request:
     branches: [ main, master ]
+  workflow_dispatch:
 
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
 
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: root_ci
+          MYSQL_DATABASE: automax
+          MYSQL_USER: automax
+          MYSQL_PASSWORD: automax_ci
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping -h 127.0.0.1 -proot_ci --silent"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=10
+
     steps:
     - name: Copiar repositorio
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
 
     - name: Configurar Node.js
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v4
       with:
-        node-version: '18'
+        node-version: '20'
+        cache: npm
+        cache-dependency-path: server/package-lock.json
 
-    - name: Validar archivos JS y sintaxis
+    - name: Validar sintaxis del frontend (JS)
       run: |
-        node --check JS/java.js
+        for f in JS/*.js; do
+          echo "Revisando $f"
+          node --check "$f"
+        done
 
-    - name: Ejecutar Pruebas Automáticas
+    - name: Instalar dependencias y validar el servidor
+      working-directory: server
       run: |
-        echo "Ejecutando pruebas de filtros y modales de AutoMax..."
-        echo "Prueba 1: Búsqueda por marca OK"
-        echo "Prueba 2: Filtro por precio máximo OK"
-        echo "Prueba 3: Validación de formato de precios OK"
+        npm ci
+        npm run check
+
+    - name: Validar docker-compose
+      run: |
+        cp .env.example .env
+        docker compose config --quiet
+        docker compose -f docker-compose.prod.yml config --quiet
+      env:
+        IMAGE_NAME: ghcr.io/ci/automax
+
+    - name: Cargar esquema y datos de prueba en MySQL
+      run: |
+        mysql -h 127.0.0.1 -u root -proot_ci automax < db/01_schema.sql
+        mysql -h 127.0.0.1 -u root -proot_ci automax < db/02_seed.sql
+
+    - name: Pruebas automáticas de la API
+      env:
+        DB_HOST: 127.0.0.1
+        DB_PORT: 3306
+        DB_USER: automax
+        DB_PASSWORD: automax_ci
+        DB_NAME: automax
+        JWT_SECRET: secreto-solo-para-ci
+        PORT: 3000
+      run: |
+        node server/src/app.js > app.log 2>&1 &
+        for i in $(seq 1 20); do
+          curl -fs http://127.0.0.1:3000/api/health && break
+          sleep 2
+        done
+
+        echo "Prueba 1: la API se conecta a MySQL"
+        curl -fs http://127.0.0.1:3000/api/health | grep -q '"estado":"ok"'
+
+        echo "Prueba 2: catálogo con 6 vehículos"
+        test "$(curl -fs http://127.0.0.1:3000/api/vehiculos | jq length)" -eq 6
+
+        echo "Prueba 3: precios numéricos y filtrables"
+        curl -fs http://127.0.0.1:3000/api/vehiculos | jq -e 'all(.[]; (.precio | type) == "number")'
+
+        echo "Prueba 4: servicios y artículos del blog"
+        test "$(curl -fs http://127.0.0.1:3000/api/servicios | jq length)" -eq 8
+        test "$(curl -fs http://127.0.0.1:3000/api/posts | jq length)" -eq 6
+
+        echo "Prueba 5: login correcto e incorrecto"
+        curl -fs -X POST http://127.0.0.1:3000/api/auth/login \
+          -H 'Content-Type: application/json' \
+          -d '{"correo":"cliente@fydelmt.com","password":"Cliente123"}' | jq -e '.token'
+        test "$(curl -s -o /dev/null -w '%{http_code}' -X POST http://127.0.0.1:3000/api/auth/login \
+          -H 'Content-Type: application/json' \
+          -d '{"correo":"cliente@fydelmt.com","password":"incorrecta"}')" = "401"
+
+        echo "Prueba 6: comentar exige sesión"
+        test "$(curl -s -o /dev/null -w '%{http_code}' -X POST http://127.0.0.1:3000/api/posts/1/comentarios \
+          -H 'Content-Type: application/json' -d '{"texto":"hola"}')" = "401"
+
+    - name: Mostrar logs de la app si falla
+      if: failure()
+      run: cat app.log || true
+
+    - name: Validar que la imagen Docker compila
+      run: docker build -t automax-web:ci .

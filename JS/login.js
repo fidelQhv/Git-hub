@@ -5,29 +5,16 @@
 const CLAVE_USUARIOS = "automax_usuarios";
 const CLAVE_SESION = "automax_sesion";
 
-const USUARIOS_INICIALES = [
-    { nombre: "Administrador Principal", correo: "admind@fydelmt.com", password: "admind", rol: "Administrador" },
-    { nombre: "Administrador Ventas", correo: "admind.ventas@fydelmt.com", password: "admind456", rol: "Administrador" },
-    { nombre: "Trabajador FydelMT", correo: "trabajador@fydelmt.com", password: "Trabajo123", rol: "Trabajador" },
-    { nombre: "Cliente Demo", correo: "cliente@fydelmt.com", password: "Cliente123", rol: "Cliente" }
-];
+// Las cuentas (con contraseña cifrada) viven en la tabla "usuarios" de MySQL.
+// El servidor devuelve un token JWT que se guarda junto con los datos de la sesión.
 
-function obtenerUsuarios() {
-    const datos = localStorage.getItem(CLAVE_USUARIOS);
-    const usuarios = datos ? JSON.parse(datos) : [];
-    const correosRegistrados = new Set(usuarios.map(usuario => usuario.correo));
-    const usuariosNuevos = USUARIOS_INICIALES.filter(usuario => !correosRegistrados.has(usuario.correo));
-
-    if (usuariosNuevos.length > 0) {
-        guardarUsuarios([...usuarios, ...usuariosNuevos]);
-        return [...usuarios, ...usuariosNuevos];
-    }
-
-    return usuarios;
-}
-
-function guardarUsuarios(usuarios) {
-    localStorage.setItem(CLAVE_USUARIOS, JSON.stringify(usuarios));
+function guardarSesion(datos) {
+    localStorage.setItem(CLAVE_TOKEN, datos.token);
+    localStorage.setItem(CLAVE_SESION, JSON.stringify({
+        nombre: datos.usuario.nombre,
+        correo: datos.usuario.correo,
+        rol: datos.usuario.rol || "Cliente"
+    }));
 }
 
 // TABS
@@ -67,7 +54,7 @@ function mostrarToast(mensaje) {
 
 // LOGIN
 
-document.getElementById("formLogin").addEventListener("submit", function (e) {
+document.getElementById("formLogin").addEventListener("submit", async function (e) {
     e.preventDefault();
 
     limpiarError("loginCorreo", "errorLoginCorreo");
@@ -90,21 +77,20 @@ document.getElementById("formLogin").addEventListener("submit", function (e) {
 
     if (!valido) return;
 
-    const usuarios = obtenerUsuarios();
-    const usuario = usuarios.find(u => u.correo === correo);
-
-    if (!usuario || usuario.password !== password) {
-        mostrarError("loginPassword", "errorLoginPassword", "Correo o contraseña incorrectos.");
+    let datos;
+    try {
+        datos = await apiFetch("/auth/login", {
+            method: "POST",
+            body: JSON.stringify({ correo, password })
+        });
+    } catch (error) {
+        mostrarError("loginPassword", "errorLoginPassword", error.message);
         return;
     }
 
-    localStorage.setItem(CLAVE_SESION, JSON.stringify({
-        nombre: usuario.nombre,
-        correo: usuario.correo,
-        rol: usuario.rol || "Cliente"
-    }));
+    guardarSesion(datos);
 
-    mostrarToast(`¡Bienvenido, ${usuario.nombre}! Rol: ${usuario.rol || "Cliente"}`);
+    mostrarToast(`¡Bienvenido, ${datos.usuario.nombre}! Rol: ${datos.usuario.rol || "Cliente"}`);
 
     setTimeout(() => {
         window.location.href = "index.html";
@@ -113,7 +99,7 @@ document.getElementById("formLogin").addEventListener("submit", function (e) {
 
 // REGISTRO
 
-document.getElementById("formRegistro").addEventListener("submit", function (e) {
+document.getElementById("formRegistro").addEventListener("submit", async function (e) {
     e.preventDefault();
 
     limpiarError("regNombre", "errorRegNombre");
@@ -138,9 +124,6 @@ document.getElementById("formRegistro").addEventListener("submit", function (e) 
     if (!validarCorreo(correo)) {
         mostrarError("regCorreo", "errorRegCorreo", "Ingresa un correo válido.");
         valido = false;
-    } else if (obtenerUsuarios().some(u => u.correo === correo)) {
-        mostrarError("regCorreo", "errorRegCorreo", "Ese correo ya está registrado.");
-        valido = false;
     }
 
     if (password.length < 6) {
@@ -160,9 +143,15 @@ document.getElementById("formRegistro").addEventListener("submit", function (e) 
 
     if (!valido) return;
 
-    const usuarios = obtenerUsuarios();
-    usuarios.push({ nombre, correo, password, rol: "Cliente" });
-    guardarUsuarios(usuarios);
+    try {
+        await apiFetch("/auth/registro", {
+            method: "POST",
+            body: JSON.stringify({ nombre, correo, password })
+        });
+    } catch (error) {
+        mostrarError("regCorreo", "errorRegCorreo", error.message);
+        return;
+    }
 
     mostrarToast("Cuenta creada correctamente. Ya puedes iniciar sesión.");
 

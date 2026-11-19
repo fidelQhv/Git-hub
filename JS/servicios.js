@@ -2,72 +2,8 @@
 // BASE DE DATOS DE SERVICIOS
 // ============================================
 
-const servicios = [
-    {
-        id: 1,
-        imagen: "img/aceite.jpg",
-        nombre: "Cambio de aceite y filtros",
-        descripcion: "Cambio de aceite de motor y filtro, recomendado cada 5,000 km.",
-        precio: 45,
-        frecuencia: "Cada 5,000 km"
-    },
-    {
-        id: 2,
-        imagen: "img/diagnostico.jpg",
-        nombre: "Diagnóstico computarizado",
-        descripcion: "Escaneo electrónico completo para detectar fallas del motor y sensores.",
-        precio: 35,
-        frecuencia: "Bajo demanda"
-    },
-    {
-        id: 3,
-        imagen: "img/alineacion.jpg",
-        nombre: "Alineación y balanceo",
-        descripcion: "Mejora la estabilidad del vehículo y prolonga la vida útil de las llantas.",
-        precio: 40,
-        frecuencia: "Cada 10,000 km"
-    },
-    {
-        id: 4,
-        imagen: "img/frenos.jpg",
-        nombre: "Revisión y cambio de frenos",
-        descripcion: "Revisión de pastillas, discos y líquido de frenos.",
-        precio: 80,
-        frecuencia: "Cada 15,000 km"
-    },
-    {
-        id: 5,
-        imagen: "img/mantenimiento.jpg",
-        nombre: "Mantenimiento preventivo",
-        descripcion: "Revisión general del vehículo según su kilometraje.",
-        precio: 120,
-        frecuencia: "Según kilometraje"
-    },
-    {
-        id: 6,
-        imagen: "img/aire.jpg",
-        nombre: "Aire acondicionado",
-        descripcion: "Carga de gas refrigerante y revisión del sistema de A/C.",
-        precio: 60,
-        frecuencia: "1 vez al año"
-    },
-    {
-        id: 7,
-        imagen: "img/bateria.jpg",
-        nombre: "Cambio de batería",
-        descripcion: "Diagnóstico del sistema eléctrico y reemplazo de batería.",
-        precio: 90,
-        frecuencia: "Cada 2-3 años"
-    },
-    {
-        id: 8,
-        imagen: "img/llantas.jpg",
-        nombre: "Cambio de llantas",
-        descripcion: "Montaje, balanceo y desecho de llantas usadas incluido.",
-        precio: 150,
-        frecuencia: "Según desgaste"
-    }
-];
+// Los servicios ahora se leen de MySQL mediante GET /api/servicios
+let servicios = [];
 
 // MOSTRAR SERVICIOS
 
@@ -190,16 +126,34 @@ function configurarFormulario() {
         if (!nombre.trim()) {
             return;
         }
-        alert(
-            `Gracias ${nombre}. Tu solicitud de cita fue recibida correctamente.`
-        );
-        formulario.reset();
+        apiFetch("/citas", {
+            method: "POST",
+            body: JSON.stringify({
+                nombre,
+                telefono: document.getElementById("telefono").value,
+                correo: document.getElementById("email").value,
+                servicioId: document.getElementById("servicio").value,
+                mensaje: document.getElementById("mensaje").value
+            })
+        })
+            .then(() => {
+                alert(
+                    `Gracias ${nombre}. Tu solicitud de cita fue recibida correctamente.`
+                );
+                formulario.reset();
+            })
+            .catch(error => alert(error.message));
     });
 }
 
 // INICIALIZACIÓN
 
-function iniciarServicios() {
+async function iniciarServicios() {
+    try {
+        servicios = await apiFetch("/servicios");
+    } catch (error) {
+        alert("No se pudieron cargar los servicios. Intenta nuevamente.");
+    }
     mostrarServicios();
     actualizarContador();
     cargarServiciosSelect();
