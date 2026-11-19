@@ -1,0 +1,14 @@
+.git
+.github
+.env
+.env.*
+!.env.example
+**/node_modules
+Gitignore
+README
+docs
+db
+docker-compose*.yml
+Dockerfile
+*.md
+*.zip

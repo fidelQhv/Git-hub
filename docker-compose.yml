@@ -1,0 +1,60 @@
+# ============================================================
+# AutoMax / FydelMT - Aplicación + MySQL con un solo comando
+# 1) cp .env.example .env (y edita las contraseñas)
+# 2) docker compose up -d --build
+# 3) Abrir http://localhost:3000
+# ============================================================
+services:
+  db:
+    image: mysql:8.0
+    container_name: automax-db
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-automax}
+      MYSQL_USER: ${MYSQL_USER:-automax}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:?Define MYSQL_PASSWORD en el archivo .env}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:?Define MYSQL_ROOT_PASSWORD en el archivo .env}
+      TZ: America/Lima
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    ports:
+      - "${DB_EXPOSED_PORT:-3307}:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./db/01_schema.sql:/docker-entrypoint-initdb.d/01_schema.sql:ro
+      - ./db/02_seed.sql:/docker-entrypoint-initdb.d/02_seed.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -u root -p$$MYSQL_ROOT_PASSWORD --silent"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+    networks:
+      - automax-net
+
+  app:
+    build: .
+    image: automax-web:local
+    container_name: automax-app
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_NAME: ${MYSQL_DATABASE:-automax}
+      DB_USER: ${MYSQL_USER:-automax}
+      DB_PASSWORD: ${MYSQL_PASSWORD}
+      JWT_SECRET: ${JWT_SECRET:?Define JWT_SECRET en el archivo .env}
+    ports:
+      - "${APP_PORT:-3000}:3000"
+    networks:
+      - automax-net
+
+volumes:
+  mysql_data:
+
+networks:
+  automax-net:
